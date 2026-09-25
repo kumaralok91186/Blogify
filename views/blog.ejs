@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= blog.title %> - YouBlog</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+
+    <!-- Blog Header -->
+    <div class="blog-header">
+        <div class="blog-header-content">
+            <h1 class="blog-title"><%= blog.title %></h1>
+            <div class="blog-meta">
+                <div class="meta-item">
+                    <img src="<%= blog.createdBy.profileImageURL %>" alt="<%= blog.createdBy.fullName %>" class="meta-avatar">
+                    <span class="meta-text"><%= blog.createdBy.fullName %></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="blog-container">
+        <img src="<%= blog.coverImageURL %>" alt="<%= blog.title %>" class="blog-cover">
+
+        <div class="blog-body">
+            <pre><%= blog.body %></pre>
+        </div>
+
+        <div class="blog-divider"></div>
+
+        <!-- Author Card -->
+        <div class="author-section">
+            <img src="<%= blog.createdBy.profileImageURL %>" alt="<%= blog.createdBy.fullName %>" class="author-avatar">
+            <div class="author-info">
+                <h3><%= blog.createdBy.fullName %></h3>
+                <p>Blog Author</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <% if (user && blog.createdBy._id.toString() === user._id.toString()) { %>
+            <div class="action-buttons">
+                <a href="/blog/edit/<%= blog._id %>" class="btn btn-sm btn-warning">✏️ Edit Blog</a>
+                <form action="/blog/delete/<%= blog._id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this blog? This cannot be undone.')">🗑️ Delete Blog</button>
+                </form>
+            </div>
+        <% } %>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <h2 class="comments-title">💬 Comments (<%= comments.length %>)</h2>
+
+            <% if (locals.user) { %>
+                <div class="comment-form">
+                    <label class="comment-form-label">Join the discussion</label>
+                    <form action="/blog/comment/<%= blog._id %>" method="post">
+                        <div class="comment-input-group">
+                            <input
+                                type="text"
+                                name="content"
+                                class="form-control"
+                                placeholder="Share your thoughts on this article..."
+                                required
+                            />
+                            <button class="btn btn-primary btn-sm" type="submit">Post Comment</button>
+                        </div>
+                    </form>
+                </div>
+            <% } else { %>
+                <div class="comment-form">
+                    <div class="empty-state-link">
+                        <p><a href="/user/signin">Sign in</a> to leave a comment</p>
+                    </div>
+                </div>
+            <% } %>
+
+            <div class="comment-list">
+                <% if (comments.length > 0) { %>
+                    <% comments.forEach(comment => { %>
+                        <div class="comment-item">
+                            <div class="comment-header">
+                                <img src="<%= comment.createdBy.profileImageURL %>" alt="<%= comment.createdBy.fullName %>" class="comment-avatar">
+                                <span class="comment-author-name"><%= comment.createdBy.fullName %></span>
+                            </div>
+                            <div class="comment-content"><%= comment.content %></div>
+                            
+                            <% if (user && comment.createdBy._id.toString() === user._id.toString()) { %>
+                                <div class="comment-actions">
+                                    <button class="comment-btn comment-btn-edit" data-comment-id="<%= comment._id %>" data-comment-content="<%= comment.content.replace(/"/g, '&quot;') %>" onclick="editCommentClick(this)">
+                                        ✏️ Edit
+                                    </button>
+                                    <form action="/blog/comment/delete/<%= comment._id %>" method="POST" style="display:inline;">
+                                        <button type="submit" class="comment-btn comment-btn-delete" onclick="return confirm('Delete this comment?')">
+                                            🗑️ Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="empty-state">
+                        <div class="empty-state-title">No comments yet</div>
+                        <p>Be the first to share your thoughts on this article!</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./partials/footer') %>
+    
+    <!-- Edit Comment Modal -->
+    <!-- Edit Comment Modal -->
+    <div id="editCommentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+        <div style="background:white; border-radius:12px; padding:30px; max-width:500px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+            <h3 style="margin-bottom:20px; color:var(--text-dark); font-weight:700;">Edit Comment</h3>
+            <form id="editCommentForm" method="POST">
+                <textarea 
+                    id="editCommentContent"
+                    name="content"
+                    style="width:100%; padding:12px; border:2px solid var(--border); border-radius:8px; font-size:14px; font-family:inherit; min-height:120px; resize:vertical; margin-bottom:15px;"
+                    required
+                ></textarea>
+                <div style="display:flex; gap:10px;">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">Save Changes</button>
+                    <button type="button" onclick="closeEditCommentModal()" class="btn" style="flex:1; background:#e5e7eb; color:var(--text-dark); border:none;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function editCommentClick(button) {
+            const commentId = button.getAttribute('data-comment-id');
+            const content = button.getAttribute('data-comment-content');
+            openEditCommentModal(commentId, content);
+        }
+
+        function openEditCommentModal(commentId, content) {
+            const modal = document.getElementById('editCommentModal');
+            const form = document.getElementById('editCommentForm');
+            const textarea = document.getElementById('editCommentContent');
+            
+            textarea.value = content;
+            form.action = `/blog/comment/update/${commentId}`;
+            modal.style.display = 'flex';
+        }
+
+        function closeEditCommentModal() {
+            document.getElementById('editCommentModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editCommentModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditCommentModal();
+            }
+        });
+    </script>
+
+    <%- include('./partials/scripts') %>
+</body>
+</html>

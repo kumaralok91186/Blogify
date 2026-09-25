@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    
+    <main>
+        <h1>All Blogs</h1>
+        <div class="blog-grid">
+            <% blogs.forEach(blog => { %>
+                <div class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="<%= blog.coverImageURL %>" alt="<%= blog.title %>">
+                    </div>
+                    <div class="blog-card-content">
+                        <h3 class="blog-card-title"><%= blog.title %></h3>
+                        <p class="blog-card-excerpt"><%= blog.body.substring(0, 100) %>...</p>
+                        <div class="blog-card-meta">
+                            <% 
+                                const authorName = blog.createdBy?.fullName || 'User';
+                                const avatarUrl = blog.createdBy?.profileImageURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(authorName)}&background=1e40af&color=fff&size=32`;
+                            %>
+                            <img src="<%= avatarUrl %>" alt="<%= authorName %>" class="blog-card-avatar">
+                            <span class="blog-card-author"><%= authorName %></span>
+                            <span class="blog-card-date"><%= new Date(blog.createdAt).toLocaleDateString() %></span>
+                        </div>
+                        <a href="/blog/<%= blog._id %>" class="blog-card-link">Read More →</a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+    
+    <%- include('./partials/footer') %>
+    <%- include('./partials/scripts') %>
+</body>
+</html>

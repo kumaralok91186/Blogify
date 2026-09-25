@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Add New Blog</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+
+    <main>
+      <div class="add-container">
+        <div class="header-section">
+          <h1>➕ Create New Blog Post</h1>
+        </div>
+
+        <form action="/blog" method="post" enctype="multipart/form-data">
+          <div class="form-section">
+            <div class="form-section-title">Blog Cover Image</div>
+            <div class="mb-3">
+              <label for="coverImage" class="form-label">Cover Image</label>
+              <input
+                type="file"
+                class="form-control"
+                id="coverImage"
+                name="coverImage"
+                aria-describedby="coverImage"
+              />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">Blog Title</div>
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                placeholder="Enter your blog title..."
+                aria-describedby="title"
+              />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">Blog Content</div>
+            <div class="mb-3">
+              <label for="body" class="form-label">Body</label>
+              <textarea class="form-control" id="body" name="body" placeholder="Write your blog content..."></textarea>
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button type="submit" class="btn btn-primary">✅ Publish Blog</button>
+            <a href="/" class="btn btn-secondary">← Back to Home</a>
+          </div>
+        </form>
+      </div>
+    </main>
+    
+    <%- include('./partials/footer') %>
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

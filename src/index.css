@@ -1,0 +1,13 @@
+/* Import all original CSS styles */
+@import '../public/css/common.css';
+@import '../public/css/pages/home.css';
+@import '../public/css/pages/blog.css';
+@import '../public/css/pages/auth.css';
+@import '../public/css/pages/form.css';
+
+/* Fix any minor React-specific layout quirks while strictly maintaining original design */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

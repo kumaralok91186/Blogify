@@ -1,0 +1,63 @@
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3>📰 YouBlog</h3>
+                <p>A premium blogging platform where writers share ideas, stories, and insights with a global audience.</p>
+                <p>Crafted with passion and modern web technologies.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h3>🔗 Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <% if (locals.user) { %>
+                        <li><a href="/user/profile">My Profile</a></li>
+                        <li><a href="/blog/add-new">Write Blog</a></li>
+                    <% } else { %>
+                        <li><a href="/user/signin">Sign In</a></li>
+                        <li><a href="/user/signup">Join Us</a></li>
+                    <% } %>
+                </ul>
+            </div>
+
+            <!-- Resources -->
+            <div class="footer-section">
+                <h3>📚 Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Blog Guidelines</a></li>
+                    <li><a href="#">Writing Tips</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal -->
+            <div class="footer-section">
+                <h3>⚖️ Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                <p>&copy; 2025-2026 YouBlog. All rights reserved. | Designed with ❤️ by Your Team</p>
+            </div>
+            <div class="footer-socials">
+                <a href="#" class="footer-social-link" title="Facebook">f</a>
+                <a href="#" class="footer-social-link" title="Twitter">𝕏</a>
+                <a href="#" class="footer-social-link" title="Instagram">📷</a>
+                <a href="#" class="footer-social-link" title="LinkedIn">in</a>
+            </div>
+        </div>
+    </div>
+</footer>

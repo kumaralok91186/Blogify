@@ -1,0 +1,540 @@
+/* ========================================
+   BLOG FORM PAGES STYLES
+   (addBlog.ejs, editBlog.ejs)
+   ======================================== */
+
+:root {
+    --primary:      #1e40af;
+    --primary-dark: #1e3a8a;
+    --secondary:    #0f766e;
+    --accent:       #d97706;
+    --text-dark:    #0f172a;
+    --text-light:   #475569;
+    --text-gray:    #64748b;
+    --border:       #e2e8f0;
+    --bg-light:     #f8fafc;
+    --bg-lighter:   #f1f5f9;
+    --transition:   all 0.25s ease;
+    --success:      #10b981;
+    --error:        #ef4444;
+    --warning:      #f59e0b;
+}
+
+/* ========================================
+   PAGE LAYOUT
+   ======================================== */
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-light);
+}
+
+body > nav    { flex-shrink: 0; }
+body > main   { flex: 1; }
+body > footer { flex-shrink: 0; }
+
+/* ========================================
+   CONTAINER
+   ======================================== */
+main {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 36px 20px;
+}
+
+/* ========================================
+   FORM CONTAINER
+   ======================================== */
+.edit-container,
+.add-container {
+    background: #fff;
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 24px rgba(30, 64, 175, 0.07);
+}
+
+/* ========================================
+   HEADER SECTION
+   ======================================== */
+.header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+}
+
+.header-section h1 {
+    font-family: 'Merriweather', serif;
+    color: var(--text-dark);
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.02em;
+    flex: 1;
+    min-width: 0;
+}
+
+.breadcrumb-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.breadcrumb-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* ========================================
+   FORM STRUCTURE
+   ======================================== */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.form-section-title {
+    font-family: 'Merriweather', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary);
+    letter-spacing: -0.01em;
+}
+
+/* ========================================
+   FORM GROUPS
+   ======================================== */
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.mb-3 {
+    margin-bottom: 20px;
+}
+
+.mb-3:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label,
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-label .required {
+    color: var(--error);
+    margin-left: 4px;
+}
+
+/* ========================================
+   INPUT FIELDS
+   ======================================== */
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group textarea,
+.form-control {
+    width: 100%;
+    padding: 11px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: var(--transition);
+    background: #fff;
+    color: var(--text-dark);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="file"]:focus,
+.form-group textarea:focus,
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group textarea::placeholder,
+.form-control::placeholder {
+    color: var(--text-gray);
+}
+
+.form-group input[type="text"]:disabled,
+.form-group textarea:disabled,
+.form-control:disabled {
+    background: var(--bg-light);
+    color: var(--text-gray);
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.form-group textarea,
+.form-control[type="textarea"] {
+    resize: vertical;
+    min-height: 520px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    line-height: 1.85;
+    font-size: 14px;
+    padding: 16px;
+}
+
+/* ========================================
+   FILE UPLOAD STYLING
+   ======================================== */
+.file-upload-wrapper input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 18px 16px;
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    background: var(--bg-light);
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.file-upload-wrapper input[type="file"]:hover {
+    border-color: var(--primary);
+    background: #fff;
+}
+
+.file-upload-text {
+    color: var(--text-gray);
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 6px;
+}
+
+/* ========================================
+   CURRENT COVER IMAGE
+   ======================================== */
+.current-cover {
+    margin: 18px 0;
+    padding: 18px;
+    background: var(--bg-light);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.current-cover label {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+    color: var(--text-dark);
+    font-size: 13px;
+}
+
+.current-cover img {
+    max-width: 100%;
+    width: auto;
+    max-height: 220px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: block;
+    transition: var(--transition);
+}
+
+.current-cover img:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.cover-hint {
+    font-size: 12px;
+    color: var(--text-gray);
+    margin-top: 10px;
+    font-style: italic;
+    line-height: 1.6;
+    padding: 8px 12px;
+    border-left: 3px solid var(--accent);
+    background: rgba(217, 119, 6, 0.04);
+    border-radius: 0 4px 4px 0;
+}
+
+/* ========================================
+   BUTTON GROUP
+   ======================================== */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+}
+
+.btn {
+    padding: 12px 28px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    font-family: 'Poppins', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(30, 64, 175, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    box-shadow: 0 4px 18px rgba(30, 64, 175, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--text-gray);
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #475569;
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 8px 18px;
+    font-size: 13px;
+}
+
+/* ========================================
+   SUCCESS / ERROR MESSAGES
+   ======================================== */
+.alert {
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1px solid transparent;
+    border-left-width: 4px;
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.08);
+    color: #065f46;
+    border-color: rgba(16, 185, 129, 0.25);
+    border-left-color: var(--success);
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.08);
+    color: #7f1d1d;
+    border-color: rgba(239, 68, 68, 0.25);
+    border-left-color: var(--error);
+}
+
+.alert-warning {
+    background: rgba(245, 158, 11, 0.08);
+    color: #78350f;
+    border-color: rgba(217, 119, 6, 0.25);
+    border-left-color: var(--warning);
+}
+
+/* ========================================
+   FORM VALIDATION
+   ======================================== */
+.form-group input.error,
+.form-group textarea.error,
+.form-control.error {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-error {
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.form-hint {
+    color: var(--text-gray);
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    font-style: italic;
+}
+
+/* ========================================
+   RESPONSIVE — Tablet (max 768px)
+   ======================================== */
+@media (max-width: 768px) {
+    main {
+        padding: 28px 15px;
+    }
+
+    .edit-container,
+    .add-container {
+        padding: 32px 24px;
+    }
+
+    .header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .header-section h1 {
+        font-size: 1.5rem;
+        width: 100%;
+    }
+
+    .form-section {
+        margin-bottom: 24px;
+        padding-bottom: 24px;
+    }
+
+    .form-section-title {
+        font-size: 16px;
+    }
+
+    .form-group textarea,
+    .form-control[type="textarea"] {
+        min-height: 400px;
+        font-size: 13px;
+    }
+
+    .button-group {
+        gap: 10px;
+        margin-top: 24px;
+    }
+
+    .btn {
+        padding: 11px 22px;
+        font-size: 13px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE — Mobile (max 480px)
+   ======================================== */
+@media (max-width: 480px) {
+    main {
+        padding: 20px 12px;
+    }
+
+    .edit-container,
+    .add-container {
+        padding: 22px 16px;
+        border-radius: 12px;
+    }
+
+    .header-section h1 {
+        font-size: 1.25rem;
+    }
+
+    .breadcrumb-link {
+        font-size: 12px;
+    }
+
+    .form-section {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+    }
+
+    .form-section-title {
+        font-size: 15px;
+    }
+
+    .form-group label,
+    .form-label {
+        font-size: 13px;
+    }
+
+    .form-group textarea,
+    .form-control[type="textarea"] {
+        min-height: 320px;
+        font-size: 13px;
+        line-height: 1.75;
+    }
+
+    .current-cover {
+        padding: 14px;
+        margin: 14px 0;
+    }
+
+    .current-cover img {
+        max-height: 180px;
+    }
+
+    .cover-hint {
+        font-size: 11px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .button-group .btn {
+        width: 100%;
+    }
+
+    .alert {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+}
